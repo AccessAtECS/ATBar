@@ -29,13 +29,13 @@ function __start(){
 		// Have we already been loaded?
 		console.log("is rendered?" + AtKit.isRendered());
 		//if(AtKit.isRendered()) return;
-	
+
 		$ = AtKit.lib();
 		
 		var settings = {
 			'baseURL': 'http://c.atbar.org/ATBar/',
 			'serverURL': 'http://a.atbar.org/',
-			'version': '2.0.050d',
+			'version': '2.0.053d',
 			'ttsChunkSize': 1500
 		};
 		
@@ -62,7 +62,7 @@ function __start(){
 				
 				var externalWindow = load.document;
 				
-				externalWindow.all.edit-field-report-url.focus();
+				externalWindow.all['edit-field-report-url'].focus();
 			}, 
 			null, null
 		);
@@ -76,10 +76,11 @@ function __start(){
 			var newVal = parseFloat(current + mult);
 		
 			$('body').css('font-size', newVal + "px" );
-			AtKit.storage('ATBar_pageFontSize', newVal);
+			AtKit.storage('pageFontSize', newVal);
 		});
 		
-		var stored_fontSize = AtKit.storage('ATBar_pageFontSize');
+		// If we have a stored fontsize for this page, restore it now.
+		var stored_fontSize = AtKit.storage('pageFontSize');
 		if(stored_fontSize != false) $('body').css('font-size', stored_fontSize + "px" );
 		
 		AtKit.addButton(
@@ -109,6 +110,15 @@ function __start(){
 			"main": "<h1>Page font settings</h1><label for=\"sbfontface\">Font Face:</label> <select id=\"sbfontface\"><option value=\"sitespecific\">--Site Specific--</option><option value=\"arial\">Arial</option><option value=\"courier\">Courier</option><option value=\"cursive\">Cursive</option><option value=\"fantasy\">Fantasy</option><option value=\"georgia\">Georgia</option><option value=\"helvetica\">Helvetica</option><option value=\"impact\">Impact</option><option value=\"monaco\">Monaco</option><option value=\"monospace\">Monospace</option><option value=\"sans-serif\">Sans-Serif</option><option value=\"tahoma\">Tahoma</option><option value=\"times new roman\">Times New Roman</option><option value=\"trebuchet ms\">Trebuchet MS</option><option value=\"verdant\">Verdana</option></select><br /><br /> <label for=\"sblinespacing\">Line Spacing:</label> <input type=\"text\" name=\"sblinespacing\" id=\"sblinespacing\" maxlength=\"3\" size=\"3\" value=\"100\">%<br /><br /><button id='ATApplyFont'> Apply</a></div>"
 		};
 		
+		AtKit.addFn('changeFont', function(args){
+			if(args.fontFace != "--Site Specific--") $('body').css('font-family', args.fontFace);
+			
+			$('div').css('line-height', args.lineHeight + "%");
+			$('#sbar').css('line-height', '0%');
+			AtKit.storage('pageFont', args.fontFace);
+			AtKit.storage('pageLineHeight', args.lineHeight);
+		});
+		
 		AtKit.addButton(
 			'fontSettings', 
 			'Font settings',
@@ -116,10 +126,14 @@ function __start(){
 			function(dialogs, functions){
 				AtKit.message(dialogs.main);
 				
+				var storedFont = AtKit.storage('pageFont');
+				if(storedFont != false) $('#sbfontface').children('option[value="' + storedFont + '"]').attr('selected', 'selected')'
+				
 				$('#ATApplyFont').click(function(){
-					if($('#sbfontface').val() != "--Site Specific--") $('body').css('font-family', $('#sbfontface').val());
-					$('div[class!=sbarDialogButton]').css('line-height', $('#sblinespacing').val() + "%");
-					$('#sbar').css('line-height', '0%');
+					AtKit.call('changeFont', { 
+						'fontFace': $('#sbfontface').val(),
+						'lineHeight': $('#sblinespacing').val()
+					});
 				});
 				
 				$("#sbfontface").focus();
