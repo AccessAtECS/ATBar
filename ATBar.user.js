@@ -35,7 +35,7 @@ function __start(){
 		var settings = {
 			'baseURL': 'http://c.atbar.org/ATBar/',
 			'serverURL': 'http://a.atbar.org/',
-			'version': '2.0.044d',
+			'version': '2.0.050d',
 			'ttsChunkSize': 1500
 		};
 		
@@ -46,7 +46,6 @@ function __start(){
 		AtKit.setName("ATBar");
 		
 		AtKit.setAbout("ATBar Version " + settings.version);
-		
 		
 		// Add the Fix The Web button.
 		AtKit.addButton(
@@ -77,7 +76,11 @@ function __start(){
 			var newVal = parseFloat(current + mult);
 		
 			$('body').css('font-size', newVal + "px" );
+			AtKit.storage('ATBar_pageFontSize', newVal);
 		});
+		
+		var stored_fontSize = AtKit.storage('ATBar_pageFontSize');
+		if(stored_fontSize != false) $('body').css('font-size', stored_fontSize + "px" );
 		
 		AtKit.addButton(
 			'resizeUp', 
