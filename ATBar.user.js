@@ -35,7 +35,7 @@ function __start(){
 		var settings = {
 			'baseURL': 'http://c.atbar.org/ATBar/',
 			'serverURL': 'http://a.atbar.org/',
-			'version': '2.0.053d',
+			'version': '2.0.057d',
 			'ttsChunkSize': 1500
 		};
 		
@@ -127,7 +127,7 @@ function __start(){
 				AtKit.message(dialogs.main);
 				
 				var storedFont = AtKit.storage('pageFont');
-				if(storedFont != false) $('#sbfontface').children('option[value="' + storedFont + '"]').attr('selected', 'selected')'
+				if(storedFont != false) $('#sbfontface').children('option[value="' + storedFont + '"]').attr('selected', 'selected');
 				
 				$('#ATApplyFont').click(function(){
 					AtKit.call('changeFont', { 
@@ -785,6 +785,10 @@ function __start(){
 			}, 
 			CSSDialogs, CSSFunctions
 		);		
+		
+		AtKit.addResetFn('reset-saved', function(){
+			AtKit.clearStorage();
+		});
 		
 		
 		// Add functions to AtKit.
