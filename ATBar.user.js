@@ -39,6 +39,18 @@ function __start(){
 			'ttsChunkSize': 1500
 		};
 		
+		var language = {
+			buttons: {
+				"resizeUp": "&#1586;&#1612;&#1575;&#1583;&#1577; &#1581;&#1580;&#1605; &#1575;&#1604;&#1582;&#1591;",
+				"resizeDown": "&#1575;&#1606;&#1602;&#1575;&#1589; &#1581;&#1580;&#1605; &#1575;&#1604;&#1582;&#1591;",
+				"fontSettings": "&#1578;&#1594;&#1612;&#1612;&#1585; &#1606;&#1608;&#1593; &#1608;&#1606;&#1605;&#1591; &#1575;&#1604;&#1582;&#1591;",
+				"spell": "&#1575;&#1604;&#1578;&#1583;&#1602;&#1612;&#1602; &#1575;&#1575;&#1604;&#1605;&#1575;&#1604;&#1620;&#1610;&#1611;",
+				"dictionary": "&#1575;&#1604;&#1602;&#1575;&#1605;&#1608;&#1587;",
+				"TTS": "&#1578;&#1581;&#1608;&#1612;&#1604; &#1575;&#1604;&#1606;&#1589; &#1575;&#1604;&#1593;&#1585;&#1576;&#1611; &#1621;&#1575;&#1604;&#1609; &#1603;&#1575;&#1604;&#1605;",
+				"CSS": "&#1578;&#1594;&#1612;&#1612;&#1585; &#1605;&#1592;&#1607;&#1585; &#1575;&#1604;&#1589;&#1601;&#1581;&#1577; &#1575;&#1604;&#1581;&#1575;&#1604;&#1612;&#1607;"
+			}
+		};
+		
 		
 		// Set our logo
 		AtKit.setLogo(settings.baseURL + "images/atbar.png");
@@ -85,7 +97,7 @@ function __start(){
 		
 		AtKit.addButton(
 			'resizeUp', 
-			'Increase Font Size',
+			language.buttons.resizeUp,
 			settings.baseURL + 'images/font_increase.png',
 			function(dialogs, functions){
 				AtKit.call('resizeText', '1');
@@ -95,7 +107,7 @@ function __start(){
 		
 		AtKit.addButton(
 			'resizeDown', 
-			'Decrease Font Size',
+			language.buttons.resizeDown,
 			settings.baseURL + 'images/font_decrease.png',
 			function(dialogs, functions){
 				AtKit.call('resizeText', '-1');
@@ -121,7 +133,7 @@ function __start(){
 		
 		AtKit.addButton(
 			'fontSettings', 
-			'Font settings',
+			language.settings.fontSettings,
 			settings.baseURL + 'images/font.png',
 			function(dialogs, functions){
 				AtKit.message(dialogs.main);
@@ -146,7 +158,7 @@ function __start(){
 		settings.spellcheckerLoading = false;
 		AtKit.addButton(
 			'spell', 
-			'Start Spellchecker',
+			language.settings.spell,
 			settings.baseURL + 'images/spell-off.png',
 			function(dialogs, functions){
 				if(settings.spellcheckerLoading) return;
@@ -258,7 +270,7 @@ function __start(){
 		
 		AtKit.addButton(
 			'dictionary', 
-			'Dictionary',
+			language.buttons.dictionary,
 			settings.baseURL + 'images/book_open.png',
 			function(dialogs, functions){
 				var data = eval("\"" + AtKit.call('getSelectedText', true) + "\";");
@@ -580,7 +592,7 @@ function __start(){
 
 		AtKit.addButton(
 			'tts', 
-			'Text to Speech',
+			language.buttons.TTS,
 			settings.baseURL + 'images/sound.png',
 			function(dialogs, functions){
 				if(AtKit.set('TTS_clickEnabled') == false) return;
@@ -763,7 +775,7 @@ function __start(){
 		
 		AtKit.addButton(
 			'changecss',
-			'Change Styles',
+			language.buttons.CSS,
 			settings.baseURL + 'images/palette.png',
 			function(dialogs, functions){
 				AtKit.show(dialogs.main);
