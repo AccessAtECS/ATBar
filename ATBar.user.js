@@ -35,7 +35,7 @@ function __start(){
 		var settings = {
 			'baseURL': 'http://c.atbar.org/ATBar/',
 			'serverURL': 'http://a.atbar.org/',
-			'version': '2.0.057d',
+			'version': '2.0.059d',
 			'ttsChunkSize': 1500
 		};
 		
@@ -133,7 +133,7 @@ function __start(){
 		
 		AtKit.addButton(
 			'fontSettings', 
-			language.settings.fontSettings,
+			language.buttons.fontSettings,
 			settings.baseURL + 'images/font.png',
 			function(dialogs, functions){
 				AtKit.message(dialogs.main);
@@ -158,7 +158,7 @@ function __start(){
 		settings.spellcheckerLoading = false;
 		AtKit.addButton(
 			'spell', 
-			language.settings.spell,
+			language.buttons.spell,
 			settings.baseURL + 'images/spell-off.png',
 			function(dialogs, functions){
 				if(settings.spellcheckerLoading) return;
@@ -173,7 +173,7 @@ function __start(){
 						tinyMCE.activeEditor.onKeyPress.add(function(ed, e) {
 							var content = tinyMCE.activeEditor.getContent();
 							if ( rteSpellTimer ) window.clearTimeout(rteSpellTimer);
-							rteSpellTimer = window.setTimeout(function() { $("#" + tinyMCE.activeEditor.editorContainer).rteSpellCheck(content, tinyMCE.activeEditor, { useXHRMethod: AtKit.__env.transport, RTEType: 'tMCE' }); }, 750);
+							rteSpellTimer = window.setTimeout(function() { $("#" + tinyMCE.activeEditor.editorContainer).rteSpellCheck(content, tinyMCE.activeEditor, { useXHRMethod: AtKit.__env.transport, 'lang': "ar",  RTEType: 'tMCE' }); }, 750);
 						});
 					}
 					
@@ -183,14 +183,14 @@ function __start(){
 						   	CKE.instances[o].document.on('keypress', function(){
 					    		if ( rteSpellTimer ) window.clearTimeout(rteSpellTimer);
 					    		var content = CKE.instances[o].getData();
-					    		rteSpellTimer = window.setTimeout(function() { $("#" + CKE.instances[o].element.getId()).rteSpellCheck(content, CKE.instances[o], { useXHRMethod: AtKit.__env.transport, RTEType: 'CKE' }); }, 750);
+					    		rteSpellTimer = window.setTimeout(function() { $("#" + CKE.instances[o].element.getId()).rteSpellCheck(content, CKE.instances[o], { useXHRMethod: AtKit.__env.transport, 'lang': "ar",  RTEType: 'CKE' }); }, 750);
 					    	});
 						}
 					}
 					
 					
-					$("textarea").spellcheck({ useXHRMethod: AtKit.__env.transport, baseURL: settings.baseURL });
-					$('input[type=text]').spellcheck({ useXHRMethod: AtKit.__env.transport, baseURL: settings.baseURL });
+					$("textarea").spellcheck({ useXHRMethod: AtKit.__env.transport, 'lang': "ar", baseURL: settings.baseURL });
+					$('input[type=text]').spellcheck({ useXHRMethod: AtKit.__env.transport, 'lang': "ar", baseURL: settings.baseURL });
 					
 					$('#at-lnk-spell').find('img').attr('src', settings.baseURL + "images/spell.png");
 					
