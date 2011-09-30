@@ -35,7 +35,7 @@ function __start(){
 		var settings = {
 			'baseURL': 'http://c.atbar.org/ATBar/',
 			'serverURL': 'http://a.atbar.org/',
-			'version': '2.0.059d',
+			'version': '2.0.060d-arabic',
 			'ttsChunkSize': 1500
 		};
 		
@@ -311,7 +311,7 @@ function __start(){
 		var TTSDialogs = {
 			"options": {
 				"title":"Text to Speech options",
-				"body": "What do you want to convert to speech? <br /><button id=\"sbStartTTS\"> Entire page</button> <button id=\"sbStartTTSSelection\"> Selected text</button>"
+				"body": "What do you want to convert to speech? <br /><button id=\"sbStartTTSSelection\"> Selected text</button>"
 			},
 			"starting": {
 				"title": "Text To Speech",
@@ -602,7 +602,7 @@ function __start(){
 
 				AtKit.addScript(settings.baseURL + '/swfobject.js', null);
 
-				$('#sbStartTTS').click(function(e){ 
+				/*$('#sbStartTTS').click(function(e){ 
 					// Get page contents.
 					var pageData = $(document.body).clone();
 					
@@ -629,7 +629,7 @@ function __start(){
 						AtKit.message( "<h2>Oops!</h2><p>There doesn't seem to be any content on this page, or we can't read it.</p>" );
 					}
 					
-				});
+				});*/
 
 				$('#sbStartTTSSelection').click(function(e){ 
 				
@@ -641,20 +641,25 @@ function __start(){
 				
 						this.clickEnabled = false;
 						
-						// Send the data in chunks, as chances are we cant get it all into one request.
-						var transmitData = AtKit.call('b64', selectedData );
-						
-						var chunks = Math.ceil(transmitData.length / settings.ttsChunkSize);
-						
-						if(chunks > 0){
-							var reqID = Math.floor(Math.random() * 5001);
+						$.getJSON("http://core.a.atbar.org/API/gTTS.php?l=ar&r=" + encodeURIComponent(selectedData) + "&c=?", function(data){
+							var audioContainer = "audioo";
 							
-							AtKit.message( "<h2>Processing</h2><p>Compacting and transmitting data...<br /><div id='compactStatus'>0 / " + chunks + "</div></p>" );
+							$("<div />", {'id': 'flashContent' }).prependTo("#sbar");
 							
-							AtKit.call('sendTTSChunk', { 'fullData':transmitData, 'block':1, 'totalBlocks':chunks, 'reqID':reqID });
-						} else {
-							AtKit.message( "<h2>Oops!</h2><p>There doesn't seem to be any content on this page, or we can't read it.</p>" );
-						}
+	
+							var params = {
+							  flashvars: "file=" + data.soundURL + "&autostart=true&playlist=bottom&repeat=list&playerready=playerReady&id=" + audioContainer,
+							  allowscriptaccess: "always"
+							};
+							var attributes = {
+							  id: audioContainer,
+							  name: audioContainer
+							};
+							
+							swfobject.embedSWF(settings.serverURL + "TTS/player/player-licensed.swf", "flashContent", "1", "1", "9.0.0","expressInstall.swf", false, params, attributes, function(){
+								AtKit.call('setupTTSListeners');
+							});						
+						});
 						
 					} else {
 						AtKit.message("<h2>Text-to-Speech</h2><p>To use the text to speech feature with selected text, please first select the text on this page that you would like to convert. After you have done this, click the Text to Speech button, and select the 'selected text' option.</p>");
