@@ -31,15 +31,17 @@ function __start(){
 		
 		var settings = {
 			'baseURL': 'http://c.atbar.org/ATBar/',
-			'version': '2.0.070d'
+			'version': '2.0.070-DEV'
 		};
+		
+		var plugins = ["ftw", "resize", "fonts", "spell", "dictionary", "tts", "css"];
 		
 		var onLoad = function(){
 		
 			// Set our logo
 			AtKit.setLogo(settings.baseURL + "images/atbar.png");
 			AtKit.setName("ATBar");
-			// Set language to Arabic
+
 			AtKit.setLanguage("GB");
 
 			var about = "Version " + settings.version;
@@ -48,13 +50,10 @@ function __start(){
 			AtKit.setAbout(about);
 			
 			// Add all the plugins to the toolbar
-			AtKit.addPlugin("ftw");	
-			AtKit.addPlugin("resize");
-			AtKit.addPlugin("fonts");	
-			AtKit.addPlugin("spell");
-			AtKit.addPlugin("dictionary");
-			AtKit.addPlugin("tts");
-			AtKit.addPlugin("css");
+			
+			$.each(plugins, function(i, v){
+				AtKit.addPlugin(v);
+			});
 
 			AtKit.addResetFn('reset-saved', function(){
 				AtKit.clearStorage();
@@ -65,7 +64,7 @@ function __start(){
 		};
 		
 		
-		AtKit.importPlugins(["ftw", "resize", "fonts", "spell", "dictionary", "tts", "css"], onLoad);
+		AtKit.importPlugins(plugins, onLoad);
 		
 		
 	}(window, AtKit));
