@@ -31,7 +31,7 @@ function __start(){
 		
 		var settings = {
 			'baseURL': 'http://c.atbar.org/ATBar/',
-			'version': '2.0.070-DEV'
+			'version': '2.0.070-beta1'
 		};
 		
 		var plugins = ["ftw", "resize", "fonts", "spell", "dictionary", "tts", "css"];
