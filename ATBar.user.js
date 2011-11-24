@@ -1,6 +1,7 @@
 if(typeof window['AtKit'] == "undefined"){
 	// Load AtKit
-	d=document;jf=d.createElement('script');jf.src='http://c.atbar.org/atkit/AtKit.js';jf.type='text/javascript';jf.id='AtKitLib';d.getElementsByTagName('head')[0].appendChild(jf);
+	
+	d=document;jf=d.createElement('script');jf.src=('https:' == document.location.protocol ? 'https://ssl.atbar.org/c' : 'http://c.atbar.org') + '/atkit/AtKit.js';jf.type='text/javascript';jf.id='AtKitLib';d.getElementsByTagName('head')[0].appendChild(jf);
 
 	window.AtKitLoaded = function(){
 		var eventAction = null;
@@ -30,9 +31,10 @@ function __start(){
 		$ = AtKit.lib();
 		
 		var settings = {
-			'baseURL': 'http://c.atbar.org/ATBar/',
 			'version': '2.0.070-beta1'
 		};
+		
+		settings.baseURL = ('https:' == document.location.protocol ? 'https://ssl.atbar.org/c/ATBar/' : 'http://c.atbar.org/ATBar/');
 		
 		var plugins = ["ftw", "resize", "fonts", "spell", "dictionary", "tts", "css"];
 		
