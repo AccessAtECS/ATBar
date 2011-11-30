@@ -31,12 +31,12 @@ function __start(){
 		$ = AtKit.lib();
 		
 		var settings = {
-			'version': '2.0.070-beta1'
+			'version': '2.0.075-beta2'
 		};
 		
 		settings.baseURL = ('https:' == document.location.protocol ? 'https://ssl.atbar.org/c/ATBar/' : 'http://c.atbar.org/ATBar/');
 		
-		var plugins = ["ftw", "resize", "fonts", "spell", "dictionary", "tts", "css"];
+		var plugins = ["ftw", "resize", "fonts", "spell", "dictionary", "tts", "readability", "css"];
 		
 		var onLoad = function(){
 		
