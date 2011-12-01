@@ -28,7 +28,7 @@ function __start(){
 	// Start toolbar code
 	(function (window, AtKit) { 
 
-		$ = AtKit.lib();
+		$lib = AtKit.lib();
 		
 		var settings = {
 			'version': '2.0.075-beta2'
@@ -53,7 +53,7 @@ function __start(){
 			
 			// Add all the plugins to the toolbar
 			
-			$.each(plugins, function(i, v){
+			$lib.each(plugins, function(i, v){
 				AtKit.addPlugin(v);
 			});
 
