@@ -31,10 +31,10 @@ function __start(){
 		$lib = AtKit.lib();
 		
 		var settings = {
-			'version': '2.0.093-beta5'
+			'version': '2.0.095-beta5'
 		};
 		
-		settings.baseURL = ('https:' == document.location.protocol ? 'https://ssl.atbar.org/c/ATBar/' : 'http://c.atbar.org/ATBar/');
+		settings.baseURL = ('https:' == document.location.protocol ? 'https://ssl.atbar.org/c/ATBar2/' : 'http://c.atbar.org/ATBar2/');
 		
 		var plugins = ["ftw", "resize", "fonts", "spell", "dictionary", "vaas-tts", "readability", "css"];
 		
