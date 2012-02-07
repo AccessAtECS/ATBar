@@ -31,12 +31,12 @@ function __start(){
 		$lib = AtKit.lib();
 		
 		var settings = {
-			'version': '2.0.095-beta5'
+			'version': '2.0.101-beta6'
 		};
 		
 		settings.baseURL = ('https:' == document.location.protocol ? 'https://ssl.atbar.org/c/ATBar2/' : 'http://c.atbar.org/ATBar2/');
 		
-		var plugins = ["ftw", "resize", "fonts", "spell", "dictionary", "vaas-tts", "readability", "css"];
+		var plugins = ["ftw", "resize", "fonts", "spell", "dictionary", "insipio-tts", "readability", "css", "shortcutkeys", "tooltip"];
 		
 		var onLoad = function(){
 		
@@ -59,28 +59,7 @@ function __start(){
 
 			AtKit.addResetFn('reset-saved', function(){
 				AtKit.clearStorage();
-			});
-
-			// Select button based on keypress		
-			ctrlModifier = false;
-			TModifier = false;
-			$lib(document).keyup(function (e) {
-				if(e.which == 17) ctrlModifier = false;
-				if(e.which == 84) TModifier = false;
-			}).keydown(function (e) {
-				if(e.which == 17) ctrlModifier = true;
-				if(e.which == 84) TModifier = true;
-				
-				// If we don't have the T modifier just get the first button.
-				if(e.which == 49 && ctrlModifier && !TModifier) {
-					$lib('.at-btn:first a').focus();
-					return false;
-				} else if( e.which >= 49 && e.which <= 57 && ctrlModifier && TModifier){
-					// Select the button at offset
-					$lib('.at-btn:eq(' + ( String.fromCharCode(e.which) - 1 ) + ') a').focus();
-					return false;
-				}
-			});		
+			});	
 		
 			// Run
 			AtKit.render();
