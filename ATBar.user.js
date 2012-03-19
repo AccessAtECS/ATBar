@@ -31,20 +31,24 @@ function __start(){
 		$lib = AtKit.lib();
 		
 		var settings = {
-			'version': '2.0.101-beta6'
+			'version': '2.0.107-beta8'
 		};
 		
 		settings.baseURL = ('https:' == document.location.protocol ? 'https://ssl.atbar.org/c/ATBar2/' : 'http://c.atbar.org/ATBar2/');
 		
-		var plugins = ["ftw", "resize", "fonts", "spell", "dictionary", "insipio-tts", "readability", "css", "shortcutkeys", "tooltip"];
+		var plugins = ["ftw", "resize", "fonts", "spellng", "dictionary", "insipio-tts", "readability", "css", "shortcutkeys", "tooltip"];
 		
 		var onLoad = function(){
 		
 			// Set our logo
 			AtKit.setLogo(settings.baseURL + "images/atbar.png");
 			AtKit.setName("ATBar");
-
-			AtKit.setLanguage("GB");
+			
+			if(typeof window["AtKitLanguage"] == "undefined"){
+				AtKit.setLanguage("GB");
+			} else {
+				AtKit.setLanguage(window["AtKitLanguage"]);
+			}
 
 			var about = "Version " + settings.version;
 			about += "<p style=\"line-height:120%\">Created by <a href=\"http://seb.skus.es/\">Sebastian Skuse</a> and the <a href=\"http://access.ecs.soton.ac.uk/\">Accessibility Team</a>.<br>Web and Internet Science, ECS<br> &copy; University of Southampton 2011.<br><br>Fugue Icons &copy; <a href=\"http://www.pinvoke.com/\">pinvoke</a> under Creative Commons licence, Dictionary &copy; <a href=\"http://en.wiktionary.org/\">Wiktionary</a> under Creative Commons licence.<br><a href=\"http://famspam.com/facebox/\">Facebox</a> jQuery plugin &copy; Chris Wanstrath under MIT licence, Portions of the spelling engine &copy; <a href=\"http://brandonaaron.net\">Brandon Aaron</a> under MIT licence.</p>";
