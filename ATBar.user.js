@@ -31,7 +31,7 @@ function __start(){
 		$lib = AtKit.lib();
 		
 		var settings = {
-			'version': '2.0.144-beta9'
+			'version': '2.0.150'
 		};
 		
 		settings.baseURL = ('https:' == document.location.protocol ? 'https://ssl.atbar.org/c/ATBar2/' : 'http://c.atbar.org/ATBar2/');
