@@ -1,7 +1,7 @@
 if(typeof window['AtKit'] == "undefined"){
 	// Load AtKit
 	
-	d=document;jf=d.createElement('script');jf.src=('https:' == document.location.protocol ? 'https://ssl.atbar.org/c' : 'http://c.atbar.org') + '/atkit/AtKit.js';jf.type='text/javascript';jf.id='AtKitLib';d.getElementsByTagName('head')[0].appendChild(jf);
+	d=document;jf=d.createElement('script');jf.src=('https:' == document.location.protocol ? 'https://ssl.atbar.org/c' : 'http://c.atbar.org') + '/atkit/AtKit-dev.js';jf.type='text/javascript';jf.id='AtKitLib';d.getElementsByTagName('head')[0].appendChild(jf);
 
 	window.AtKitLoaded = function(){
 		var eventAction = null;
@@ -31,20 +31,24 @@ function __start(){
 		$lib = AtKit.lib();
 		
 		var settings = {
-			'version': '2.0.095-beta5'
+			'version': '2.0.150'
 		};
 		
 		settings.baseURL = ('https:' == document.location.protocol ? 'https://ssl.atbar.org/c/ATBar2/' : 'http://c.atbar.org/ATBar2/');
 		
-		var plugins = ["ftw", "resize", "fonts", "spell", "dictionary", "vaas-tts", "readability", "css"];
+		var plugins = ["ftw", "resize", "fonts", "spellng", "dictionary", "insipio-tts", "readability", "wordprediction", "css", "shortcutkeys", "tooltip"];
 		
 		var onLoad = function(){
 		
 			// Set our logo
 			AtKit.setLogo(settings.baseURL + "images/atbar.png");
 			AtKit.setName("ATBar");
-
-			AtKit.setLanguage("GB");
+			
+			if(typeof window["AtKitLanguage"] == "undefined"){
+				AtKit.setLanguage("GB");
+			} else {
+				AtKit.setLanguage(window["AtKitLanguage"]);
+			}
 
 			var about = "Version " + settings.version;
 			about += "<p style=\"line-height:120%\">Created by <a href=\"http://seb.skus.es/\">Sebastian Skuse</a> and the <a href=\"http://access.ecs.soton.ac.uk/\">Accessibility Team</a>.<br>Web and Internet Science, ECS<br> &copy; University of Southampton 2011.<br><br>Fugue Icons &copy; <a href=\"http://www.pinvoke.com/\">pinvoke</a> under Creative Commons licence, Dictionary &copy; <a href=\"http://en.wiktionary.org/\">Wiktionary</a> under Creative Commons licence.<br><a href=\"http://famspam.com/facebox/\">Facebox</a> jQuery plugin &copy; Chris Wanstrath under MIT licence, Portions of the spelling engine &copy; <a href=\"http://brandonaaron.net\">Brandon Aaron</a> under MIT licence.</p>";
@@ -52,35 +56,10 @@ function __start(){
 			AtKit.setAbout(about);
 			
 			// Add all the plugins to the toolbar
-			
-			$lib.each(plugins, function(i, v){
-				AtKit.addPlugin(v);
-			});
 
 			AtKit.addResetFn('reset-saved', function(){
 				AtKit.clearStorage();
-			});
-
-			// Select button based on keypress		
-			ctrlModifier = false;
-			TModifier = false;
-			$lib(document).keyup(function (e) {
-				if(e.which == 17) ctrlModifier = false;
-				if(e.which == 84) TModifier = false;
-			}).keydown(function (e) {
-				if(e.which == 17) ctrlModifier = true;
-				if(e.which == 84) TModifier = true;
-				
-				// If we don't have the T modifier just get the first button.
-				if(e.which == 49 && ctrlModifier && !TModifier) {
-					$lib('.at-btn:first a').focus();
-					return false;
-				} else if( e.which >= 49 && e.which <= 57 && ctrlModifier && TModifier){
-					// Select the button at offset
-					$lib('.at-btn:eq(' + ( String.fromCharCode(e.which) - 1 ) + ') a').focus();
-					return false;
-				}
-			});		
+			});	
 		
 			// Run
 			AtKit.render();
@@ -89,9 +68,33 @@ function __start(){
 			$lib('.at-btn:first a').focus();
 		};
 		
+		// Add debug buttons.
+		AtKit.addButton(
+			'dev-load',
+			"Load ATBar functions",
+			AtKit.getPluginURL() + 'images/drive-download.png',
+			function(dialogs, functions){
+				AtKit.importPlugins(plugins, function(i, v){
+					$lib.each(plugins, function(i, v){
+						AtKit.addPlugin(v);
+					});				
+				});
+			}
+		);
+
+		AtKit.addButton(
+			'dev-loadplugin',
+			"Load unpacked plugin",
+			AtKit.getPluginURL() + 'images/hard-hat.png',
+			function(dialogs, functions){
+				var plugin = prompt("Enter the name of the plugin you wish to load unpacked", "");
+				AtKit.addScript("http://plugins.atbar.org/repo/" + plugin + ".js", function(){
+					AtKit.addPlugin(plugin);
+				});
+			}
+		);
 		
-		AtKit.importPlugins(plugins, onLoad);
-		
+		onLoad();
 		
 	}(window, AtKit));
 
