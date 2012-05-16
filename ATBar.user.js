@@ -31,7 +31,7 @@ function __start(){
 		$lib = AtKit.lib();
 		
 		var settings = {
-			'version': '2.0.153'
+			'version': '2.0.172'
 		};
 		
 		settings.baseURL = ('https:' == document.location.protocol ? 'https://ssl.atbar.org/c/ATBar2/' : 'http://c.atbar.org/ATBar2/');
@@ -63,6 +63,12 @@ function __start(){
 
 			AtKit.addResetFn('reset-saved', function(){
 				AtKit.clearStorage();
+				
+				if(typeof localStorage != null) localStorage.removeItem("ATBarAutoLoad");
+			});	
+			
+			AtKit.addCloseFn('close-saved', function(){
+				if(typeof localStorage != null) localStorage.removeItem("ATBarAutoLoad");
 			});	
 		
 			// Run
@@ -70,6 +76,9 @@ function __start(){
 			
 			// Select the first button.
 			$lib('.at-btn:first a').focus();
+			
+			// Save state
+			if(typeof localStorage != null) localStorage.setItem("ATBarAutoLoad", 1);
 		};
 		
 		
