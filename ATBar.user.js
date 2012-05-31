@@ -42,7 +42,7 @@ function __start(){
 		
 			// Set our logo
 			AtKit.setLogo(settings.baseURL + "QMplus.png");
-			AtKit.setName("ATBar");
+			AtKit.setName("QMPlus-ATBar");
 			
 			if(typeof window["AtKitLanguage"] == "undefined"){
 				AtKit.setLanguage("GB");
