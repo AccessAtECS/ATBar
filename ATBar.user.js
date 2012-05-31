@@ -34,14 +34,14 @@ function __start(){
 			'version': '2.0.172'
 		};
 		
-		settings.baseURL = ('https:' == document.location.protocol ? 'https://ssl.atbar.org/c/ATBar2/' : 'http://c.atbar.org/ATBar2/');
+		settings.baseURL = ('https:' == document.location.protocol ? 'https://ssl.atbar.org/c/ATBar2QMPlus/' : 'http://c.atbar.org/ATBar2QMPlus/');
 		
-		var plugins = ["ftw", "resize", "fonts", "spellng", "dictionary", "insipio-tts", "readability", "wordprediction", "css", "shortcutkeys", "tooltip"];
+		var plugins = ["ftw", "resize", "insipio-tts", "fonts", "css", "dictionary", "readability", "findEl", "calculator", "shortcutkeys", "tooltip"];
 		
 		var onLoad = function(){
 		
 			// Set our logo
-			AtKit.setLogo(settings.baseURL + "images/atbar.png");
+			AtKit.setLogo(settings.baseURL + "QMplus.png");
 			AtKit.setName("ATBar");
 			
 			if(typeof window["AtKitLanguage"] == "undefined"){
